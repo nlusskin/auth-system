@@ -3,3 +3,8 @@
 
 # files
 .env
+*.js
+*.log
+
+# exclude
+!webpack.config.js
