@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
 import express from 'express';
 import createError from 'http-errors';
 import logger from 'morgan';
@@ -7,6 +8,7 @@ import path from 'path';
 import indexRouter from './routes/index';
 import authRouter from './routes/authenticate';
 
+dotenv.config()
 const PORT = process.env.port || 3033;
 var app = express();
 
