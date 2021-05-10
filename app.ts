@@ -5,7 +5,7 @@ import logger from 'morgan';
 import path from 'path';
 
 import indexRouter from './routes/index';
-import authRouter from './routes/auth';
+import authRouter from './routes/authenticate';
 
 const PORT = process.env.port || 3033;
 var app = express();
