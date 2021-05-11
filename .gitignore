@@ -8,4 +8,5 @@
 *.sqlite
 
 # exclude
-!webpack.config.js
+!*.config.js
+!*.test.js
