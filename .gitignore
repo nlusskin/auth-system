@@ -5,6 +5,7 @@
 .env
 *.js
 *.log
+*.sqlite
 
 # exclude
 !webpack.config.js
