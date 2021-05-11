@@ -10,7 +10,7 @@ function App() {
   const [token, setToken] = React.useState('')
 
   const {data, call } = useAPI('authenticate');
-  React.useEffect(() => call({email: 'nick@lussk.in'}), [])
+  React.useEffect(() => call({email: 'nick@lussk.in', password: 'abc123'}), [])
 
   return <div>{JSON.stringify(data)}</div>
 }

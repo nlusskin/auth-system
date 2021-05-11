@@ -143,6 +143,8 @@ class JWT {
    * @returns JWTPayload
    */
   validate = (): JWTPayload | boolean => {
+    if (!this.jwt) return false;
+    
     let [h, p, s] = this.jwt!.jwt.split('.');
     if (!(h && p && s)) throw new Error('Invalid token format')
 
@@ -165,7 +167,7 @@ class JWT {
   refreshToken = () => {
     if (!this.payload) throw new Error('Valid payload needed to generate refresh token');
 
-    let pl = this.payload!.sub;
+    let pl = `${this.payload!.sub}.${Date.now() / 1000}`;
     const hmac = crypto.createHmac('sha256', this.secret);
     pl = this.b64UrlEncode(pl);
     hmac.update(pl);
