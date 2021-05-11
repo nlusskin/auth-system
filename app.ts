@@ -9,6 +9,8 @@ import authUser from './src/auth'
 
 import indexRouter from './routes/index';
 import authRouter from './routes/authenticate';
+import logoutRouter from './routes/logout';
+import welcomeRouter from './routes/welcome';
 
 dotenv.config()
 const PORT = process.env.PORT;
@@ -24,10 +26,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(authUser)
+// authenticate user when accessing protected resources
+app.use(authUser);
 
+// available application routes
 app.use('/', indexRouter);
 app.use('/authenticate', authRouter);
+app.use('/logout', logoutRouter);
+app.use('/welcome', welcomeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
