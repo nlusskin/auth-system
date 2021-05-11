@@ -1,15 +1,20 @@
 import React from 'react'
-import { useAPI } from '../hooks/useAPI'
+
+import Loading from '@components/Loading';
+import { useAPI } from '@hooks/useAPI'
 
 
 export default function Welcome() {
 
-  const {data, call } = useAPI('authenticate');
-  React.useEffect(() => call({email: 'nick@lussk.in', password: 'abc123'}), [])
+  const { data, call } = useAPI('welcome');
+
+  React.useEffect(call, []);
+
+  return <div className='w-1/4 h-1/4 vertical-center mx-auto'><Loading /></div>
 
   return (
-    <div>
-      <a href='/logout'>Logout</a>
+    <div className='w-2/3 h-2/3 mx-auto vertical-center'>
+      <p>{data.msg}</p>
     </div>
   )
 }

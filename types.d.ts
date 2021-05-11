@@ -18,3 +18,8 @@ interface RefreshToken {
   revoked: boolean
   iat: Date
 }
+
+declare module '*.gif' {
+  const content: string
+  export default content;
+}

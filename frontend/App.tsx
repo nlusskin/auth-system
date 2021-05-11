@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Loading from './components/Loading'
-import Auth from './pages/Auth'
-import Welcome from './pages/Welcome'
-import AuthContext, { AuthProvider } from './providers/Auth'
+
+import Header from '@components/Header'
+import Loading from '@components/Loading'
+import Auth from '@pages/Auth'
+import Welcome from '@pages/Welcome'
+import AuthContext, { AuthProvider } from '@providers/Auth'
 
 import './tailwind.css'
-
-
 
 function App() {
   return (
@@ -19,13 +19,15 @@ function App() {
 
 function Router() {
   const { authState } = React.useContext(AuthContext);
+  const authed = authState.authed;
 
-  if (!authState.loaded) return <Loading />
+  if (!authState.loaded) return <div className='w-1/4 h-1/4 vertical-center mx-auto'><Loading /></div>
 
   return (
-    <div>
-      {!authState.authed && <Auth />}
-      {authState.authed && <Welcome />}
+    <div className='w-full h-full overflow-hidden'>
+      {authed && <Header />}
+      {!authed && <Auth />}
+      {authed && <Welcome />}
     </div>
   )
 }

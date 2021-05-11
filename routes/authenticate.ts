@@ -9,12 +9,13 @@ router.post('/', async function(req:Request, res: Response, next) {
 
   let email = req.body.email;
   let password = req.body.password;
+  let create = req.body.create;
 
   let [existingUser] = await Knex.select('*')
     .from('users')
     .where('userId', email)
 
-  if (existingUser.password !== password) {
+  if (existingUser && existingUser.password !== password) {
     return res.sendStatus(403);
   }
 
@@ -23,6 +24,9 @@ router.post('/', async function(req:Request, res: Response, next) {
   let refTok = jwt.refreshToken();
   
   if (!existingUser) {
+    // avoid creating identities for mistyped emails
+    if (!create) return res.sendStatus(403);
+    
     await Knex('users').insert({
       userId: email,
       password: password,

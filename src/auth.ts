@@ -5,6 +5,9 @@ import Knex from '../db/driver'
 
 export default async function(req:Request, res:Response, next:NextFunction) {
 
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Method', '*')
+  res.setHeader('Access-Control-Allow-Header', '*')
   // let authentication or index requests through
   if (req.path == '/authenticate' || req.path == '/') return next()
 

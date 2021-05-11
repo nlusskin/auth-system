@@ -3,3 +3,8 @@
 @tailwind components;
 @tailwind screens;
 @tailwind utilities;
+
+.vertical-center {
+  margin-top: 50%;
+  transform: translateY(-50%);
+}
