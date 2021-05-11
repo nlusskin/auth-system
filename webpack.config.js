@@ -12,6 +12,7 @@ var config = {
       "@components": path.join(frontendDir, 'components'),
       "@hooks": path.join(frontendDir, 'hooks'),
       "@pages": path.join(frontendDir, 'pages'),
+      "@providers": path.join(frontendDir, 'providers'),
     },
 		// Add '.ts' and '.tsx' as resolvable extensions.
 		extensions: ['.ts', '.tsx', '.js', '.jsx']

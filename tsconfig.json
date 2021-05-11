@@ -28,8 +28,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["*"],
-      "@components/*": ["components/*"],
-      "@hooks/*": ["hooks/*"],
+      "@components/*": ["frontend/components/*"],
+      "@hooks/*": ["frontend/hooks/*"],
+      "@pages/*": ["frontend/pages/*"],
+      "@providers/*": ["frontend/providers/*"],
     },
   }
 }
