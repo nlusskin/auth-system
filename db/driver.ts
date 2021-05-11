@@ -6,7 +6,8 @@ const Knex = knex({
   client: 'sqlite3',
   connection: {
     filename: DB_PATH
-  }
+  },
+  useNullAsDefault: true
 });
 
 export default Knex;

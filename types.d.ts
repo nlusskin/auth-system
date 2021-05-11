@@ -23,3 +23,21 @@ declare module '*.gif' {
   const content: string
   export default content;
 }
+
+// JWT
+type JWTHeader = {
+  alg: "HS256",
+  typ: "JWT"
+};
+
+type JWTPayload = {
+  iss: string,
+  iat: number,
+  exp: number,
+  sub: string,
+  aud: string
+};
+
+type JWTSignature = string;
+
+type Secret = string;
