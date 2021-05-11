@@ -54,16 +54,16 @@ class JWT {
   };
 
   /**
-   * Utility function to b64 strings
+   * Utility function to b64 decode strings
    * @param os object
    * @returns string | object
    */
   private b64Decode = (os: string): string | object => {
-    let b64str = Buffer.from(os, 'base64').toString('utf8');
-
-    b64str = b64str
+    let b64str = os
       .replace(/-/g, '+')
       .replace(/_/g, '/');
+
+    b64str = Buffer.from(os, 'base64').toString('utf8');
     
     try {
       return JSON.parse(b64str);
@@ -103,7 +103,7 @@ class JWT {
   };
 
   /**
-   * Verifies the secret
+   * Verifies the secret format
    * @param secret string
    */
   private properSecret = (secret: string) => {
@@ -164,6 +164,10 @@ class JWT {
     }
   }
 
+  /**
+   * Generate a refresh token
+   * @returns string
+   */
   refreshToken = () => {
     if (!this.payload) throw new Error('Valid payload needed to generate refresh token');
 
@@ -203,20 +207,3 @@ export default JWT;
 
 type JWTPartial = Partial<JWTPayload> & Pick<JWTPayload,'sub'>;
 type JWTToken = { jwt: string};
-
-type JWTHeader = {
-  alg: "HS256",
-  typ: "JWT"
-};
-
-type JWTPayload = {
-  iss: string,
-  iat: number,
-  exp: number,
-  sub: string,
-  aud: string
-};
-
-type JWTSignature = string;
-
-type Secret = string;
