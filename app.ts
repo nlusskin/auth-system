@@ -5,11 +5,13 @@ import createError from 'http-errors';
 import logger from 'morgan';
 import path from 'path';
 
+import authUser from './src/auth'
+
 import indexRouter from './routes/index';
 import authRouter from './routes/authenticate';
 
 dotenv.config()
-const PORT = process.env.port || 3033;
+const PORT = process.env.PORT;
 var app = express();
 
 // view engine setup
@@ -21,6 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(authUser)
 
 app.use('/', indexRouter);
 app.use('/authenticate', authRouter);

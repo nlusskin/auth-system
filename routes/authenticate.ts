@@ -1,13 +1,17 @@
-var express = require('express');
+import express, { Request, Response } from 'express';
 var router = express.Router();
 
 import JWT from '../src/jwt'
 
 /* POST credentials and return status */
-router.get('/', function(req, res, next) {
-  let jwt = new JWT({sub: 'nick'})
+router.post('/', function(req:Request, res: Response, next) {
+
+  let jwt = new JWT({sub: req.body.email});
+  res.setHeader('Set-Cookie', [`_jwt=${jwt.sign()}`, `_ref=${jwt.refreshToken()}`]);
+  res.sendStatus(200)
   
-  res.send('token: ' + jwt.sign());
 });
+
+
 
 export default router;

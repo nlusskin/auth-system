@@ -10,7 +10,8 @@ const validTime = parseInt(process.env.JWT_EXP!) || 36000;
 class JWT {
   private secret: Secret;
   private header: JWTHeader;
-  private payload: JWTPayload;
+  private payload?: JWTPayload;
+  private jwt?: JWTToken
 
   /**
    * Build the JWT class for signing and verifying tokens
@@ -28,7 +29,13 @@ class JWT {
     this.secret = this.properSecret(process.env.JWT_SECRET!);
 
     // parse the payload or verify token if the 'jwt' parameter is set
-    this.payload = (pl as JWTToken)?.jwt ? this.verify((pl as JWTToken).jwt) : this.fillPayload(pl as JWTPartial);
+    if(!(pl as JWTToken)?.jwt) {
+      this.payload = this.fillPayload(pl as JWTPartial);
+    }
+    else {
+      this.jwt = pl as JWTToken
+    }
+    
   };
 
   /**
@@ -95,7 +102,6 @@ class JWT {
     return fpl;
   };
 
-
   /**
    * Verifies the secret
    * @param secret string
@@ -107,18 +113,19 @@ class JWT {
       console.warn('[WARN] Secret is too short. Create a stronger JWT secret.');
     
     return secret;
-  }
-
+  };
 
   /**
    * Signs and returns the full JWT
    * @returns string
    */
   sign = (p?:JWTPayload) => {
+    if (!this.payload) throw new SigningError();
+
     const hmac = crypto.createHmac('sha256', this.secret);
 
     let header = this.b64UrlEncode(this.header);
-    let payload = this.b64UrlEncode(p || this.payload);
+    let payload = this.b64UrlEncode(p || this.payload!);
     let toSign = `${header}.${payload}`;
     
     hmac.update(toSign);
@@ -135,8 +142,8 @@ class JWT {
    * @param jwt string
    * @returns JWTPayload
    */
-  verify = (jwt: string): JWTPayload => {
-    let [h, p, s] = jwt.split('.');
+  validate = (): JWTPayload | boolean => {
+    let [h, p, s] = this.jwt!.jwt.split('.');
     if (!(h && p && s)) throw new Error('Invalid token format')
 
     const hmac = crypto.createHmac('sha256', this.secret);
@@ -147,12 +154,23 @@ class JWT {
 
     let pl = this.b64Decode(p) as JWTPayload;
 
-    if(crypto.timingSafeEqual(Buffer.from(sig, 'base64'), Buffer.from(s, 'base64'))) {
+    if(crypto.timingSafeEqual(Buffer.from(sig, 'base64'), Buffer.from(s, 'base64')) && pl.exp > new Date()) {
       return pl;
     }
     else {
-      throw new ValidationError();
+      return false;
     }
+  }
+
+  refreshToken = () => {
+    if (!this.payload) throw new Error('Valid payload needed to generate refresh token');
+
+    let pl = this.payload!.sub;
+    const hmac = crypto.createHmac('sha256', this.secret);
+    pl = this.b64UrlEncode(pl);
+    hmac.update(pl);
+
+    return this.urlEncode(hmac.digest('base64'));
   }
 
 };
@@ -165,6 +183,15 @@ class ValidationError {
   msg: string;
   constructor() {
     this.msg = 'Could not validate token';
+  }
+}
+/**
+ * Signing Error class
+ */
+class SigningError {
+  msg: string;
+  constructor() {
+    this.msg = 'Could not sign payload';
   }
 }
 
