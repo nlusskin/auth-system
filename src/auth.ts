@@ -5,8 +5,8 @@ import Knex from '../db/driver'
 
 export default async function(req:Request, res:Response, next:NextFunction) {
 
-  // let authentication requests through
-  if (req.path == '/authenticate') next()
+  // let authentication or index requests through
+  if (req.path == '/authenticate' || req.path == '/') return next()
 
   let token = req.cookies._jwt;
   let refToken = req.cookies._ref;
@@ -16,9 +16,9 @@ export default async function(req:Request, res:Response, next:NextFunction) {
 
   else {
     // try to refresh the token by looking it up in the database
-    let [validUserRefresh] = await Knex.select('userId')
-      .from('refreshTokens')
-      .where({token: refToken, revoked: false});
+    let [validUserRefresh] = await Knex('refreshTokens')
+      .where({token: refToken, revoked: 0})
+      .select();
 
     if (validUserRefresh) {
       jwt = new JWT({sub: validUserRefresh.userId});
@@ -31,6 +31,5 @@ export default async function(req:Request, res:Response, next:NextFunction) {
       res.sendStatus(403);
     }
   }
-  res.render('index', { title: 'EngagedMD Case Study' });
 
 }

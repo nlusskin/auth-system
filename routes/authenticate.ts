@@ -19,6 +19,7 @@ router.post('/', async function(req:Request, res: Response, next) {
   }
 
   let jwt = new JWT({sub: email});
+  let refTok = jwt.refreshToken()
   
   if (!existingUser) {
     await Knex('users').insert({
@@ -29,16 +30,29 @@ router.post('/', async function(req:Request, res: Response, next) {
   }
   await Knex('refreshTokens').insert({
     userId: email,
-    token: jwt.refreshToken(),
+    token: refTok,
     revoked: false,
     iat: new Date()
   });
 
-  res.setHeader('Set-Cookie', [`_jwt=${jwt.sign()}`, `_ref=${jwt.refreshToken()}`]);
+  res.setHeader('Set-Cookie', [`_jwt=${jwt.sign()}`, `_ref=${refTok}`]);
   res.sendStatus(200);
   
 });
 
+/* GET auth status and return user */
+router.get('/', async function(req:Request, res:Response, next) {
+  let jwt = new JWT({jwt: req.cookies._jwt});
 
+  let pl = jwt.validate();
+
+  if (!pl) {
+    return res.status(403).send({error: true});
+  }
+  else {
+    return res.json(pl);
+  }
+
+})
 
 export default router;

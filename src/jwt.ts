@@ -93,8 +93,8 @@ class JWT {
   private fillPayload = (pl:JWTPartial): JWTPayload => {
     let fpl:JWTPayload = {
       iss: 'emdcs',
-      iat: new Date(),
-      exp: new Date(Date.now() + validTime),
+      iat: Date.now(),
+      exp: Date.now() + (validTime * 1000),
       aud: 'default',
       ...pl
     };
@@ -144,7 +144,7 @@ class JWT {
    */
   validate = (): JWTPayload | boolean => {
     if (!this.jwt) return false;
-    
+
     let [h, p, s] = this.jwt!.jwt.split('.');
     if (!(h && p && s)) throw new Error('Invalid token format')
 
@@ -156,7 +156,7 @@ class JWT {
 
     let pl = this.b64Decode(p) as JWTPayload;
 
-    if(crypto.timingSafeEqual(Buffer.from(sig, 'base64'), Buffer.from(s, 'base64')) && pl.exp > new Date()) {
+    if(crypto.timingSafeEqual(Buffer.from(sig, 'base64'), Buffer.from(s, 'base64')) && pl.exp > Date.now()) {
       return pl;
     }
     else {
@@ -211,8 +211,8 @@ type JWTHeader = {
 
 type JWTPayload = {
   iss: string,
-  iat: Date,
-  exp: Date,
+  iat: number,
+  exp: number,
   sub: string,
   aud: string
 };
