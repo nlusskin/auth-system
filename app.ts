@@ -52,4 +52,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.listen(PORT, () => console.info('Server listening on port: ' + PORT))
+export default app;
