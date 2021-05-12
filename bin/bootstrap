@@ -18,4 +18,5 @@ cmd('echo "JWT_SECRET=$(openssl rand -base64 64)\n" >> ./.env');
 cmd('echo "PORT=3033\n" >> ./.env');
 cmd('yarn');
 cmd('npx knex migrate:latest');
+cmd('npx webpack -c ../webpack.config.js --config-name frontend')
 cmd('ts-node ./bin/www');
