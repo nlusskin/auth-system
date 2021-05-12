@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { default: JWT } = require('../src/jwt');
+const { default: JWT } = require('../lib/jwt');
 
 const userId = 'test@example.net';
 

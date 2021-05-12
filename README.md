@@ -2,13 +2,16 @@
 Node 14+
 
 # Setting up
-1. Generate an environment file defining `PORT` and `JWT_SECRET`. These can be any value.
+Run the available setup script using `yarn run setup`
+
+Alternatively, run the following individual commands:
+1. Generate an environment file defining `PORT=3033` and `JWT_SECRET`. The secret can be any value.
 2. Run `yarn` to install packages
 3. Provision the database using `npx knex migrate:latest`
 4. Build the app using `yarn run build`
 5. Start the server using `yarn run start`
 
-Alternatively, you can run the available setup script using `yarn run setup`
+
 
 # Features
 The app has a few basic features:
@@ -42,6 +45,18 @@ Returns:
 {
   msg: String,
   img: URL
+}
+```
+
+### Settings
+Settings defines an endpoint allowing different account settings to be updated. Currenty, only `password` is defined.
+The user's password can be updated like this:
+```
+{
+  password: {
+    currentPassword: String,   // server verifies current password before allowing change
+    newPassword: String
+  }
 }
 ```
 

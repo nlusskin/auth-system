@@ -1,7 +1,7 @@
 const request = require('supertest');
 var app = require('../app');
 const { default: Knex } = require('../db/driver');
-const { default: JWT } = require('../src/jwt');
+const { default: JWT } = require('../lib/jwt');
 
 app = app['default'];
 const userId = 'test_user_agX1j4fG9@b6dNoby7ve.net';

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 echo "Beginning setup..."
-echo "JWT_SECRET=$(openssl rand -base64 32)\n" >> ./.env
-echo "PORT=3033\n" >> ./.env
+echo "JWT_SECRET=$(openssl rand -base64 32)" >> ./.env
+echo "PORT=3033" >> ./.env
 yarn
 npx knex migrate:latest
-npx webpack --config-name frontend'
-npx ts-node ./serve.ts'
+npx webpack --config-name frontend
+npx ts-node ./serve.ts

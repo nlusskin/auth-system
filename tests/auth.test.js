@@ -1,6 +1,6 @@
 const request = require('supertest');
 var app = require('../app');
-const { default: JWT } = require('../src/jwt');
+const { default: JWT } = require('../lib/jwt');
 const { default: Knex } = require('../db/driver')
 
 app = app['default'];
