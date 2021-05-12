@@ -1,3 +1,7 @@
+/**
+ * Courtesy Unsplash
+ */
+
 export default [
   {
     id: "NYCyZmgUOEc",
