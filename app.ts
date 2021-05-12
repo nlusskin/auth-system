@@ -5,7 +5,7 @@ import createError from 'http-errors';
 import logger from 'morgan';
 import path from 'path';
 
-import authUser from './src/auth'
+import authUser from './lib/auth'
 
 import indexRouter from './routes/index';
 import authRouter from './routes/authenticate';

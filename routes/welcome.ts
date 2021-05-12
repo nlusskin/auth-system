@@ -1,7 +1,7 @@
 import express from 'express';
 var router = express.Router();
 
-import images from '../src/images'
+import images from '../lib/images'
 
 /* GET welcome data */
 router.get('/', function(req, res, next) {

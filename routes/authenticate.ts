@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 var router = express.Router();
 
-import JWT from '../src/jwt'
+import JWT from '../lib/jwt'
 import Knex from '../db/driver'
 
 /* POST credentials and return status */

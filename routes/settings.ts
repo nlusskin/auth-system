@@ -3,7 +3,7 @@ var router = express.Router();
 
 
 import Knex from '../db/driver'
-import JWT from '../src/jwt';
+import JWT from '../lib/jwt';
 
 /* POST settings return status */
 router.post('/', async function(req:Request, res: Response, next) {
