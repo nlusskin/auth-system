@@ -6,7 +6,7 @@ import React from 'react';
 
 const PORT = 3033;
 
-declare type actions = 'authenticate'|'welcome';
+declare type actions = 'authenticate'|'welcome'|'settings';
 
 const API_URL = `http://localhost:${PORT}/`;
 

@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+const { exec } = require('child_process');
+
+console.log('Beginning set up...')
+
+function cmd(e) {
+  exec(e, (err, stdout, stderr) => {
+    console.log(stdout);
+    if (err) {
+      console.error(err.message);
+    }
+  });
+}
+
+
+cmd('echo "JWT_SECRET=$(openssl rand -base64 64)\n" >> ./.env');
+cmd('echo "PORT=3033\n" >> ./.env');
+cmd('yarn');
+cmd('npx knex migrate:latest');
+cmd('ts-node ./bin/www');

@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start:dev": "nodemon app.ts",
-    "build:dev": "NODE_ENV=development npx webpack --watch --config-name frontend",
-    "test": "node -r dotenv/config $(which jest)"
+    "start": "nodemon serve.ts",
+    "build": "NODE_ENV=development npx webpack --watch --config-name frontend",
+    "test": "node -r dotenv/config $(which jest)",
+    "setup": "./bin/bootstrap"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",

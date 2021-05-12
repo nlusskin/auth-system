@@ -207,3 +207,20 @@ export default JWT;
 
 type JWTPartial = Partial<JWTPayload> & Pick<JWTPayload,'sub'>;
 type JWTToken = { jwt: string};
+
+type JWTHeader = {
+  alg: "HS256",
+  typ: "JWT"
+};
+
+type JWTPayload = {
+  iss: string,
+  iat: number,
+  exp: number,
+  sub: string,
+  aud: string
+};
+
+type JWTSignature = string;
+
+type Secret = string;
