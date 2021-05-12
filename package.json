@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon serve.ts",
-    "build": "NODE_ENV=development npx webpack --watch --config-name frontend",
+    "start:dev": "nodemon serve.ts",
+    "start": "ts-node serve.ts",
+    "build:dev": "NODE_ENV=development npx webpack --watch --config-name frontend",
+    "build": "NODE_ENV=production npx webpack --config-name frontend",
     "test": "node -r dotenv/config $(which jest)",
     "setup": "./bin/bootstrap"
   },

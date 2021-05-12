@@ -4,7 +4,7 @@ module.exports = {
     // purgeLayersByDefault: true,
   },
   purge: {
-    enabled: false,
+    // enabled: false,
     content: [
       "./**/*.tsx",
     ],
