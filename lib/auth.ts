@@ -1,3 +1,7 @@
+/**
+ * Middleware to validate authentication when accessing protected resources
+ */
+
 import { Request, Response, NextFunction } from 'express';
 
 import JWT from './jwt';

@@ -98,7 +98,7 @@ Hold the view controllers used by Express
 
 # Testing
 Tests are built using [Jest](https://jestjs.io])
-Run tests using `yarn run test`
+Run tests by starting the server `yarn run start` and using `yarn run test`
 
 # TODOs and Considerations
 Some things to consider for implementation in a production system:
